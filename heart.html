@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff0f3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow: hidden;
+  }
+
+  .container {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .main-heart {
+    font-size: 100px;
+    display: block;
+    animation: heartbeat 0.8s ease-out forwards;
+    transform-origin: center;
+  }
+
+  .love-text {
+    font-size: 32px;
+    font-weight: 600;
+    color: #c0325a;
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 0.5s forwards;
+  }
+
+  .floating-hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .fh {
+    position: absolute;
+    bottom: -40px;
+    opacity: 0;
+    animation: floatUp 3s ease-in-out forwards;
+  }
+
+  @keyframes heartbeat {
+    0%   { transform: scale(0.2); opacity: 0; }
+    50%  { transform: scale(1.25); opacity: 1; }
+    70%  { transform: scale(0.9); }
+    85%  { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes floatUp {
+    0%   { opacity: 0; transform: translateY(0) scale(0.8) rotate(-10deg); }
+    15%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-100vh) scale(1.3) rotate(10deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="floating-hearts" id="floatingHearts"></div>
+
+<div class="container">
+  <span class="main-heart">❤️</span>
+  <div class="love-text">Я тебя люблю</div>
+</div>
+
+<script>
+  const hearts = document.getElementById('floatingHearts');
+  const count = 18;
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'fh';
+    el.textContent = ['❤️','🩷','💕','💗','💖'][Math.floor(Math.random() * 5)];
+    el.style.left = (Math.random() * 95) + '%';
+    el.style.fontSize = (12 + Math.random() * 22) + 'px';
+    el.style.animationDelay = (Math.random() * 2.5) + 's';
+    el.style.animationDuration = (2 + Math.random() * 2) + 's';
+    hearts.appendChild(el);
+  }
+
+  if (window.Telegram?.WebApp) {
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
+  }
+</script>
+</body>
+</html>
